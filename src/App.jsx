@@ -1,22 +1,32 @@
 import React, { useState } from 'react';
 
 function App() {
-  const [evRoadTax, setEvRoadTax] = useState(140);
-  const [maintenanceCost, setMaintenanceCost] = useState(90);
-  const [maintenanceMiles, setMaintenanceMiles] = useState(5000);
-  const [gasPrice, setGasPrice] = useState(3);
-  const [mpg, setMpg] = useState(25);
-  const [electricityCost, setElectricityCost] = useState(0.13);
-  const [milesPerKwh, setMilesPerKwh] = useState(4.3);
-  const [annualMiles, setAnnualMiles] = useState(12000);
+  const [evRoadTax, setEvRoadTax] = useState('100');
+  const [maintenanceCost, setMaintenanceCost] = useState('50');
+  const [maintenanceMiles, setMaintenanceMiles] = useState('5000');
+  const [gasPrice, setGasPrice] = useState('3.5');
+  const [mpg, setMpg] = useState('25');
+  const [electricityCost, setElectricityCost] = useState('0.13');
+  const [milesPerKwh, setMilesPerKwh] = useState('3');
+  const [annualMiles, setAnnualMiles] = useState('12000');
+
+  // Parsing input values for calculations
+  const evRoadTaxNum = parseFloat(evRoadTax) || 0;
+  const maintenanceCostNum = parseFloat(maintenanceCost) || 0;
+  const maintenanceMilesNum = parseFloat(maintenanceMiles) || 1; // Avoid division by zero
+  const gasPriceNum = parseFloat(gasPrice) || 0;
+  const mpgNum = parseFloat(mpg) || 1; // Avoid division by zero
+  const electricityCostNum = parseFloat(electricityCost) || 0;
+  const milesPerKwhNum = parseFloat(milesPerKwh) || 1; // Avoid division by zero
+  const annualMilesNum = parseFloat(annualMiles) || 1; // Avoid division by zero
 
   // Calculations
-  const gasMaintenancePerMile = maintenanceCost / maintenanceMiles;
-  const gasFuelCostPerMile = gasPrice / mpg;
+  const gasMaintenancePerMile = maintenanceCostNum / maintenanceMilesNum;
+  const gasFuelCostPerMile = gasPriceNum / mpgNum;
   const gasTotalCostPerMile = gasFuelCostPerMile + gasMaintenancePerMile;
 
-  const evFuelCostPerMile = electricityCost / milesPerKwh;
-  const evRoadTaxPerMile = evRoadTax / annualMiles;
+  const evFuelCostPerMile = electricityCostNum / milesPerKwhNum;
+  const evRoadTaxPerMile = evRoadTaxNum / annualMilesNum;
   const evTotalCostPerMile = evFuelCostPerMile + evRoadTaxPerMile;
 
   return (
@@ -32,7 +42,7 @@ function App() {
               <input
                 type="number"
                 value={evRoadTax}
-                onChange={(e) => setEvRoadTax(parseFloat(e.target.value))}
+                onChange={(e) => setEvRoadTax(e.target.value)}
                 className="mt-1 p-2 w-full border rounded"
               />
             </div>
@@ -41,7 +51,7 @@ function App() {
               <input
                 type="number"
                 value={electricityCost}
-                onChange={(e) => setElectricityCost(parseFloat(e.target.value))}
+                onChange={(e) => setElectricityCost(e.target.value)}
                 className="mt-1 p-2 w-full border rounded"
                 step="0.01"
               />
@@ -51,7 +61,7 @@ function App() {
               <input
                 type="number"
                 value={milesPerKwh}
-                onChange={(e) => setMilesPerKwh(parseFloat(e.target.value))}
+                onChange={(e) => setMilesPerKwh(e.target.value)}
                 className="mt-1 p-2 w-full border rounded"
                 step="0.1"
               />
@@ -62,11 +72,11 @@ function App() {
           <div>
             <h2 className="text-xl font-semibold mb-2">Gas Car</h2>
             <div className="mb-4">
-              <label className="block text-gray-700">Maintenance Cost ($ per oil change)</label>
+              <label className="block text-gray-700">Maintenance Cost ($ per service)</label>
               <input
                 type="number"
                 value={maintenanceCost}
-                onChange={(e) => setMaintenanceCost(parseFloat(e.target.value))}
+                onChange={(e) => setMaintenanceCost(e.target.value)}
                 className="mt-1 p-2 w-full border rounded"
               />
             </div>
@@ -75,7 +85,7 @@ function App() {
               <input
                 type="number"
                 value={maintenanceMiles}
-                onChange={(e) => setMaintenanceMiles(parseFloat(e.target.value))}
+                onChange={(e) => setMaintenanceMiles(e.target.value)}
                 className="mt-1 p-2 w-full border rounded"
               />
             </div>
@@ -84,7 +94,7 @@ function App() {
               <input
                 type="number"
                 value={gasPrice}
-                onChange={(e) => setGasPrice(parseFloat(e.target.value))}
+                onChange={(e) => setGasPrice(e.target.value)}
                 className="mt-1 p-2 w-full border rounded"
                 step="0.01"
               />
@@ -94,7 +104,7 @@ function App() {
               <input
                 type="number"
                 value={mpg}
-                onChange={(e) => setMpg(parseFloat(e.target.value))}
+                onChange={(e) => setMpg(e.target.value)}
                 className="mt-1 p-2 w-full border rounded"
                 step="0.1"
               />
@@ -108,7 +118,7 @@ function App() {
           <input
             type="number"
             value={annualMiles}
-            onChange={(e) => setAnnualMiles(parseFloat(e.target.value))}
+            onChange={(e) => setAnnualMiles(e.target.value)}
             className="mt-1 p-2 w-full border rounded"
           />
         </div>
@@ -164,4 +174,3 @@ function App() {
 }
 
 export default App;
-
